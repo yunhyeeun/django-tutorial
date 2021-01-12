@@ -1,0 +1,10 @@
+{% if latest_report_list %}
+    <ul>
+    {% for report in latest_report_list %}
+        <h1><a href="{% url 'local' report.seq %}">{{ report.statedt }}</a></h1>
+        <li>확진자 수 : {{ report.decidecnt }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No reports are available.</p>
+{% endif %}
