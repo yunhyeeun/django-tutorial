@@ -1,10 +1,69 @@
-{% if latest_report_list %}
-    <ul>
-    {% for report in latest_report_list %}
-        <h1><a href="{% url 'local' report.seq %}">{{ report.statedt }}</a></h1>
-        <li>확진자 수 : {{ report.decidecnt }}</li>
-    {% endfor %}
-    </ul>
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
+
+{% if overview_data %}
+    <h1>{{ overview_data.weekly_report_list.0.statedt }}</h1>
+    <div>
+        <h2>국내 발생 현황</h2>
+        <ul>
+        <li>총 확진자 수 : {{ overview_data.weekly_report_list.0.decidecnt }}</li>
+        <ul>
+            {% for city in overview_data.daily_city_list %}
+                {% if city.gubun == '합계' %}
+                <li>전일 대비 : {{ city.incdec }}</li>
+                <li>국내 발생 : {{ city.localocccnt }}</li>
+                <li>해외 유입 : {{ city.overflowcnt }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <li>총 사망자 수 : {{ overview_data.weekly_report_list.0.deathcnt }}</li>
+        <ul><li>전일 대비 : {{ overview_data.net_change.deathcnt }}</li></ul>
+        <li>총 격리해제 수 : {{ overview_data.weekly_report_list.0.clearcnt }}</li>
+        <ul><li>전일 대비 : {{ overview_data.net_change.clearcnt }}</li></ul>
+        <li>격리 중 환자 수 : {{ overview_data.weekly_report_list.0.carecnt }}</li>
+        <ul><li>전일 대비 : {{ overview_data.net_change.carecnt }}</li></ul>
+        {% comment %} <li>오늘 검사진행 수 : {{ weekly_report_list.0.examcnt }}</li> {% endcomment %}
+        {% comment %} <li>결과 음성 수 : {{ report.resultnegcnt }}</li> {% endcomment %}
+        {% comment %} <li>누적 검사 수 : {{ report.accexamcnt }}</li> {% endcomment %}
+        {% comment %} <li>누적 검사 완료 수 : {{ report.accexamcompcnt }}</li> {% endcomment %}
+        {% comment %} <li>누적 환진률 : {{ report.accdefrate }}</li>  {% endcomment %}
+        </ul>
+    </div>
+
+    <div>
+        <h2>시도별 발생동향</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>시도명</th>
+                    <th>전일대비 증감 수</th>
+                    <th>국내발생</th>
+                    <th>해외유입</th>
+                    <th>총 확진자 수</th>
+                    <th>격리중</th>
+                    <th>격리해제</th>
+                    <th>사망자 수</th>
+                    <th>발생률</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for city in overview_data.daily_city_list %}
+                    <tr>
+                        <th>{{ city.gubun }}</th>
+                        <th>{{ city.incdec }}</th>
+                        <th>{{ city.localocccnt }}</th>
+                        <th>{{ city.overflowcnt }}</th>
+                        <th>{{ city.defcnt }}</th>
+                        <th>{{ city.isolingcnt }}</th>
+                        <th>{{ city.isolclearcnt }}</th>
+                        <th>{{ city.deathcnt }}</th>
+                        <th>{{ city.qurrate }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% else %}
     <p>No reports are available.</p>
 {% endif %}

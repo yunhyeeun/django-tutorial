@@ -94,7 +94,7 @@ def print_overview_api():
     API_KEY = parse.unquote(API_KEY)
     PAGENO = '1'
     NUM_ROWS = '10'
-    START_DATE = '20200310',
+    START_DATE = '20210101',
     today = date.today()
     END_DATE = '{0:04d}{1:02d}{2:02d}'.format(int(today.year), int(today.month), int(today.day))
     # print (END_DATE)
@@ -102,8 +102,10 @@ def print_overview_api():
         'ServiceKey' : API_KEY,
         # 'pageNo' : PAGENO,
         # 'numOfRows' : NUM_ROWS,
-        # 'startCreateDt' : START_DATE
+        # 'startCreateDt' : START_DATE,
         # 'endCreateDt' : END_DATE
+        'startCreateDt' : '20210120',
+        'endCreateDt' : '20210120'
     }
     
     request = requests.get(URL, params=params)
@@ -172,15 +174,15 @@ def print_data_by_cities_api():
     API_KEY = parse.unquote(API_KEY)
     PAGENO = '1'
     NUM_ROWS = '10'
-    START_DATE = '20200310',
+    START_DATE = '20210101',
     today = date.today()
     END_DATE = '{0:04d}{1:02d}{2:02d}'.format(int(today.year), int(today.month), int(today.day))
     params = {
         'ServiceKey' : API_KEY,
         # 'pageNo' : PAGENO,
         # 'numOfRows' : NUM_ROWS,
-        # 'startCreateDt' : START_DATE
-        # 'endCreateDt' : END_DATE
+        'startCreateDt' : '20210120',
+        'endCreateDt' : '20210120'
     }
     
     request = requests.get(URL, params=params)
@@ -230,7 +232,7 @@ def print_data_by_cities_api():
 
 def connectDB():
     conn = pymysql.connect(
-        host = 'localhost',
+        host = '127.0.0.1',
         user = 'root',
         password = '',
         db = 'coronareport',
@@ -264,7 +266,8 @@ def connectDB():
 
         val = (seq, accDefRate, accExamCnt, accExamCompCnt, careCnt, clearCnt, createDt, deathCnt, decideCnt, examCnt, resultNegCnt, stateDt, stateTime)
         cursor.execute(sql, val)
-        conn.commit()
+    
+    conn.commit()
     
     city_data_list = print_data_by_cities_api()
     sql = '''INSERT IGNORE INTO city(

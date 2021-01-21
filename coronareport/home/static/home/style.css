@@ -1,0 +1,12 @@
+body {
+    background: #303030;
+    color: #ffffff
+}
+table {
+    width: 50%;
+}
+
+table, th, td {
+    padding: 0.5em;
+    border: 1px solid #bcbcbc;
+}
