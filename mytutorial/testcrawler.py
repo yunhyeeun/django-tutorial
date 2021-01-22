@@ -104,8 +104,8 @@ def print_overview_api():
         # 'numOfRows' : NUM_ROWS,
         # 'startCreateDt' : START_DATE,
         # 'endCreateDt' : END_DATE
-        'startCreateDt' : '20210120',
-        'endCreateDt' : '20210120'
+        # 'startCreateDt' : '20210120',
+        # 'endCreateDt' : '20210120'
     }
     
     request = requests.get(URL, params=params)
@@ -181,8 +181,8 @@ def print_data_by_cities_api():
         'ServiceKey' : API_KEY,
         # 'pageNo' : PAGENO,
         # 'numOfRows' : NUM_ROWS,
-        'startCreateDt' : '20210120',
-        'endCreateDt' : '20210120'
+        # 'startCreateDt' : '20210120',
+        # 'endCreateDt' : '20210120'
     }
     
     request = requests.get(URL, params=params)
