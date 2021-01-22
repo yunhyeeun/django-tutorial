@@ -5,7 +5,7 @@ name: Run Crawler - Update data
 
 on:
   schedule:
-    - cron:  '*/60 * * * *'
+    - cron:  '*/10 * * * *'
 
 jobs:
   build:
@@ -43,13 +43,6 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Verify MysqlDB connection
-      env:
-        PORT: ${{ job.services.mysql.ports[3306] }} 
-      run: |
-        while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
-          sleep 1
-        done
     - name: Run Crawler with python
       run: |
         cd mytutorial
